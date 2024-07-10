@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_and_routes/screen_three.dart';
+import 'package:flutter_navigation_and_routes/navigation/screen_three.dart';
 
 class ScreenTwo extends StatelessWidget {
-  final String? data;
-  ScreenTwo({this.data, super.key});
+  ScreenTwo({super.key});
   @override
   Widget build(BuildContext context) {
     // recieve arguements from previous screen/route
-    // final arguements = ModalRoute.of(context)!.settings.arguments as Map;
+    final arguements = ModalRoute.of(context)!.settings.arguments as Map;
+    final message = arguements['message'];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Second Screen'),
@@ -17,7 +17,7 @@ class ScreenTwo extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('First Screen says ${data ?? ''}'),
+            Text('First Screen says ${message}'),
             const SizedBox(
               height: 20,
             ),
@@ -30,7 +30,7 @@ class ScreenTwo extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ScreenThree()),
+                  MaterialPageRoute(builder: (context) => ScreenThree()),
                 );
 
                 //using named route
@@ -48,7 +48,7 @@ class ScreenTwo extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.white30),
               onPressed: () {
-                Navigator.pop(context, 'asdfasdfsaf');
+                Navigator.pop(context);
                 ;
               },
               child: const Icon(Icons.arrow_back_ios),

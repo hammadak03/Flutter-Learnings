@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ScreenThree extends StatelessWidget {
-  const ScreenThree({super.key});
+  ScreenThree({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final arguements = ModalRoute.of(context)!.settings.arguments as Map;
+    // final arguements = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Third Screen'),

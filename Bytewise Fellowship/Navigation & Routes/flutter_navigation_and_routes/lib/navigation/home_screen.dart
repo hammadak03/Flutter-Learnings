@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_and_routes/screen_two.dart';
+import 'package:flutter_navigation_and_routes/navigation/screen_two.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +25,13 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ScreenTwo(),
+                    builder: (context) => ScreenTwo(
+                      data: 'My name is Hammad',
+                    ),
                   ),
                 );
 
-                //pushNamed() used with named routes
-                // Navigator.pushNamed(context, '/screenTwo');
-
-                //pushAndRemoveUntil() & pushNamedAndRemoveUntil()
+                //pushAndRemoveUntil()
                 //push a new route and remove all the previous routes until
                 //predicate returns true
                 // Navigator.pushAndRemoveUntil(
@@ -40,23 +39,12 @@ class HomeScreen extends StatelessWidget {
                 //     MaterialPageRoute(builder: (context) => const ScreenTwo()),
                 //     (Route<dynamic> route) => false);
 
-                //using named route
-                // Navigator.pushNamedAndRemoveUntil(
-                // context, '/screenTwo', (Route<dynamic> route) => false);
-
-                //popAndPushNamed()
-                //pops current route off the stack and pushed a new route
-                // Navigator.popAndPushNamed(context, '/screenTwo');
-
-                // pushReplacement() & pushReplacementNamed()
+                // pushReplacement()
                 //replace the current route with a new route.
                 // Navigator.pushReplacement(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => const ScreenTwo()),
                 // );
-
-                //using named routes
-                // Navigator.pushReplacementNamed(context, '/screenTwo');
               },
               child: const Icon(Icons.arrow_forward_ios),
             )
