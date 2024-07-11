@@ -1,16 +1,9 @@
 # form_validation_app
 
-A new Flutter project.
+This Flutter application demonstrates how to create a login and signup form and use Shared Preferences to store and manage user credentials. The app ensures that once a user logs in, they remain logged in until they manually log out.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Login and Signup forms with validation.
+- Store user credentials securely using Shared Preferences.
+- Persistent login state across app sessions.
