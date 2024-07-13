@@ -1,16 +1,30 @@
-# state_management_example
+# Movies Favorites App
 
-A new Flutter project.
+Movies Favorites App is a simple Flutter application that allows users to manage their favorite movies. Users can browse a list of available movies, add them to their favorites, and view their curated list of favorite movies.
 
-## Getting Started
+## Introduction
 
-This project is a starting point for a Flutter application.
+This Flutter app provides a straightforward user interface where users can interact with movies:
 
-A few resources to get you started if this is your first Flutter project:
+- **Movie List**: Displays a list of available movies.
+- **Favorites**: Allows users to add movies to their favorites list and view them separately.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The app demonstrates basic state management using the Provider package, ensuring efficient and responsive updates to the UI based on user actions.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Provider State Management
+
+**Provider** is a state management package for Flutter applications that simplifies the sharing and management of application state across the widget tree. It utilizes the **Provider pattern** and `InheritedWidget` for efficient dependency injection and change notification.
+
+### Key Benefits of Provider:
+
+- **Dependency Injection**: Defines and provides data models or services at the top of the widget tree, making state accessible throughout the app.
+  
+- **Change Notification**: Updates UI components only when necessary, improving performance by rebuilding only widgets affected by state changes.
+
+### Usage in This App
+
+- **Movies Favorites App** uses Provider for:
+  - Managing the list of movies and favorite movies.
+  - Ensuring real-time updates to the UI based on changes in the list of favorite movies (`FavoritesModel`).
+
+  Each screen (`MovieListScreen` and `FavoritesScreen`) leverages `Consumer` widgets to listen for changes and update their respective UI components efficiently.
