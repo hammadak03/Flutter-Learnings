@@ -15,8 +15,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  String? _selectedRole;
-  final List<String> _roles = ['Admin', 'User', 'Guest'];
 
   @override
   void dispose() {
@@ -30,7 +28,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('username', _usernameController.text);
       await prefs.setString('password', _passwordController.text);
-      await prefs.setString('role', _selectedRole!);
       await prefs.setBool('isLoggedIn', true);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -86,30 +83,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Role'),
-                value: _selectedRole,
-                items: _roles.map((String role) {
-                  return DropdownMenuItem<String>(
-                    value: role,
-                    child: Text(role),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedRole = newValue;
-                  });
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please select a role';
                   }
                   return null;
                 },
