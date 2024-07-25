@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list_app/handlers/db_handler.dart';
 import 'package:todo_list_app/models/todo_model.dart';
 import 'package:todo_list_app/screens/add_update_screen.dart';
-import 'package:todo_list_app/screens/login_screen.dart';
-
-Future<void> _logout(BuildContext context) async {
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('isLoggedIn', false);
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const LoginScreen()),
-  );
-}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -50,16 +39,15 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         actions: [
           Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: IconButton(
-                onPressed: () {
-                  _logout(context);
-                },
-                icon: Icon(
-                  Icons.logout_outlined,
-                  size: 30,
-                ),
-              ))
+            padding: EdgeInsets.only(right: 10),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.question_mark_outlined,
+                size: 30,
+              ),
+            ),
+          )
         ],
       ),
       body: Column(

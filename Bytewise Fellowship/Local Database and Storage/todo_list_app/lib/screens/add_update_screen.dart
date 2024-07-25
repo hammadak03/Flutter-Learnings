@@ -150,13 +150,13 @@ class _AddUpdateScreenState extends State<AddUpdateScreen> {
                           height: 55,
                           width: 120,
                           decoration: BoxDecoration(
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //       color: Colors.black12,
-                              //       blurRadius: 7,
-                              //       spreadRadius: 1),
-                              // ],
-                              ),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 7,
+                                  spreadRadius: 1),
+                            ],
+                          ),
                           child: Text(
                             'Submit',
                             style: TextStyle(
@@ -185,13 +185,13 @@ class _AddUpdateScreenState extends State<AddUpdateScreen> {
                           height: 55,
                           width: 120,
                           decoration: BoxDecoration(
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //       color: Colors.black12,
-                              //       blurRadius: 7,
-                              //       spreadRadius: 1),
-                              // ],
-                              ),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 7,
+                                  spreadRadius: 1),
+                            ],
+                          ),
                           child: Text(
                             'Clear',
                             style: TextStyle(
@@ -202,7 +202,7 @@ class _AddUpdateScreenState extends State<AddUpdateScreen> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               )
