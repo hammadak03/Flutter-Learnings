@@ -188,6 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.green,
         child: Icon(
           Icons.add,
+          color: Colors.white,
         ),
       ),
     );

@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:todo_list_app/handlers/db_handler.dart';
 import 'package:todo_list_app/models/todo_model.dart';
 import 'package:todo_list_app/screens/home_screen.dart';
+import 'package:todo_list_app/widgets/custom_button.dart';
+import 'package:todo_list_app/widgets/custom_text_form_field.dart';
 
 // ignore: must_be_immutable
 class AddUpdateScreen extends StatefulWidget {
@@ -64,38 +66,16 @@ class _AddUpdateScreenState extends State<AddUpdateScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        keyboardType: TextInputType.multiline,
-                        controller: _titleController,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Note Title'),
-                        validator: (value) {
-                          if (value!.isEmpty) return 'Enter some text';
-                          return null;
-                        },
-                      ),
-                    ),
+                    CustomTextFormField(
+                        controller: _titleController, hintText: 'Note title'),
                     SizedBox(
                       height: 10,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        minLines: 5,
-                        controller: _descController,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Write notes here'),
-                        validator: (value) {
-                          if (value!.isEmpty) return 'Enter some text';
-                          return null;
-                        },
-                      ),
+                    CustomTextFormField(
+                      controller: _descController,
+                      hintText: 'Write notes here',
+                      maxLines: null,
+                      minLines: 5,
                     ),
                   ],
                 ),
@@ -108,10 +88,9 @@ class _AddUpdateScreenState extends State<AddUpdateScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Material(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
+                    CustomButton(
+                        buttonText: 'Submit',
+                        color: Colors.green,
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
                             if (widget.update == true) {
@@ -142,67 +121,16 @@ class _AddUpdateScreenState extends State<AddUpdateScreen> {
                             _descController.clear();
                             print('Date added');
                           }
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          height: 55,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 7,
-                                  spreadRadius: 1),
-                            ],
-                          ),
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 22,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Material(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
+                        }),
+                    CustomButton(
+                        buttonText: 'Clear',
+                        color: Colors.red,
                         onTap: () {
                           setState(() {
                             _titleController.clear();
                             _descController.clear();
                           });
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          height: 55,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 7,
-                                  spreadRadius: 1),
-                            ],
-                          ),
-                          child: Text(
-                            'Clear',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 22,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                        }),
                   ],
                 ),
               )
