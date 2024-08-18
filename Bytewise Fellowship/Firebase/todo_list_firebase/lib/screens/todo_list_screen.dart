@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,13 +11,17 @@ class TodoListScreen extends StatefulWidget {
   const TodoListScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _TodoListScreenState createState() => _TodoListScreenState();
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
   final TextEditingController _textController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirestoreService _firestoreService = FirestoreService();
+  String _searchQuery = '';
+  bool _isSearching = false; // To track if the search bar is active
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +30,51 @@ class _TodoListScreenState extends State<TodoListScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('TODOs', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 5, 25, 70),
+        title: _isSearching
+            ? TextField(
+                controller: _searchController,
+                autofocus: true, // Automatically focus the search field
+                decoration: const InputDecoration(
+                  hintText: 'Search tasks...',
+                  hintStyle: TextStyle(color: Colors.white60),
+                  border: InputBorder.none,
+                ),
+                style: const TextStyle(color: Colors.white),
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value.toLowerCase();
+                  });
+                },
+              )
+            : const Text('TODOs', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
-              onPressed: () async {
-                await _auth.signOut();
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()));
-              },
-              icon: const Icon(
-                Icons.logout,
-                color: Colors.white,
-              ))
+            icon: Icon(
+              _isSearching ? Icons.close : Icons.search,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                if (_isSearching) {
+                  _searchController.clear();
+                  _searchQuery = '';
+                }
+                _isSearching = !_isSearching;
+              });
+            },
+          ),
+          IconButton(
+            onPressed: () async {
+              await _auth.signOut();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()));
+            },
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
       body: Column(
@@ -102,7 +138,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
           return const Center(child: Text('No tasks found.'));
         }
 
-        final todos = snapshot.data!.docs;
+        final todos = snapshot.data!.docs.where((doc) {
+          final String task = doc['task'].toLowerCase();
+          return task.contains(_searchQuery);
+        }).toList();
+
+        if (todos.isEmpty) {
+          return const Center(child: Text('No matching tasks found.'));
+        }
 
         return ListView.builder(
           itemCount: todos.length,
