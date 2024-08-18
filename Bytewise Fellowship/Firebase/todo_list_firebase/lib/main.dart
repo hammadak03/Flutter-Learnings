@@ -17,9 +17,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Todo-List Firebase',
-      home: const LoginScreen(),
+      // home: const LoginScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../services/firebase_auth_services.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
-import 'home_screen.dart';
 import 'singup_screen.dart';
+import 'todo_list_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -29,21 +29,20 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 150,
-              width: 190,
+              height: 200,
               padding: const EdgeInsets.only(top: 40),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(200),
               ),
-              child: const Center(
+              child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    FlutterLogo(
-                      size: 70,
+                    Image.network(
+                      'https://thumbs.dreamstime.com/b/clipboard-report-shopping-list-icon-creative-element-design-stock-market-icons-collection-pixel-perfect-clipboard-report-169625067.jpg',
                     ),
-                    Text(
-                      'Flutter',
+                    const Text(
+                      'Todo-List',
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.w100),
                     ),
@@ -82,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                   if (user != null) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const HomeScreen()),
+                      MaterialPageRoute(builder: (_) => TodoListScreen()),
                     );
                   }
                 } catch (e) {
@@ -94,7 +93,7 @@ class LoginScreen extends StatelessWidget {
               buttonText: 'Login',
             ),
             const SizedBox(
-              height: 130,
+              height: 100,
             ),
             TextButton(
               onPressed: () {
