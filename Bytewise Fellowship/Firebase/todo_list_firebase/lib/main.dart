@@ -20,18 +20,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      supportedLocales: [
-        Locale('en'),
-        Locale('ur'),
-        Locale('de'),
-      ],
-      locale: Locale('de'),
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
       title: 'Todo-List Firebase',
       // home: const LoginScreen(),
       home: LoginScreen(),
