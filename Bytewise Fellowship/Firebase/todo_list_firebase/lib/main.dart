@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo_list_firebase/firebase_options.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'screens/login_screen.dart';
 
 void main() async {
@@ -19,6 +20,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
+      supportedLocales: [
+        Locale('en'),
+        Locale('ur'),
+        Locale('de'),
+      ],
+      locale: Locale('ur'),
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       title: 'Todo-List Firebase',
       // home: const LoginScreen(),
       home: LoginScreen(),

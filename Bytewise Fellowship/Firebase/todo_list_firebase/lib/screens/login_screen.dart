@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously
 
+import 'package:flutter/material.dart';
 import '../services/firebase_auth_services.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import 'singup_screen.dart';
 import 'todo_list_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -16,6 +18,7 @@ class LoginScreen extends StatelessWidget {
     final authService = FirebaseAuthService();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'Login Page',
@@ -25,86 +28,92 @@ class LoginScreen extends StatelessWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 5, 25, 70),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              height: 200,
-              padding: const EdgeInsets.only(top: 40),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(200),
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.network(
-                      'https://thumbs.dreamstime.com/b/clipboard-report-shopping-list-icon-creative-element-design-stock-market-icons-collection-pixel-perfect-clipboard-report-169625067.jpg',
-                    ),
-                    const Text(
-                      'Todo-List',
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w100),
-                    ),
-                  ],
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                height: 200,
+                padding: const EdgeInsets.only(top: 40),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(200),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.network(
+                        'https://thumbs.dreamstime.com/b/clipboard-report-shopping-list-icon-creative-element-design-stock-market-icons-collection-pixel-perfect-clipboard-report-169625067.jpg',
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.todos,
+                        style: const TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.w100),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            CustomTextField(
-              labelText: 'User Name',
-              hintText: 'Enter valid mail id as abc@gmail.com',
-              obscureText: false,
-              textEditingController: userController,
-            ),
-            CustomTextField(
-              labelText: 'Password',
-              hintText: 'Enter your secured password',
-              obscureText: true,
-              textEditingController: passwordController,
-            ),
-            TextButton(
-              onPressed: () async {
-                await _showForgotPasswordDialog(context, authService);
-              },
-              child: const Text(
-                'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
+              CustomTextField(
+                labelText: AppLocalizations.of(context)!.username,
+                hintText: AppLocalizations.of(context)!.enterEmail,
+                obscureText: false,
+                textEditingController: userController,
               ),
-            ),
-            CustomButton(
-              onPressed: () async {
-                try {
-                  final user = await authService.login(
-                    userController.text,
-                    passwordController.text,
-                  );
-                  if (user != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => TodoListScreen()),
+              CustomTextField(
+                labelText: AppLocalizations.of(context)!.password,
+                hintText: AppLocalizations.of(context)!.enterPassword,
+                obscureText: true,
+                textEditingController: passwordController,
+              ),
+              TextButton(
+                onPressed: () async {
+                  await _showForgotPasswordDialog(context, authService);
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.forgotPassword,
+                  style: const TextStyle(color: Colors.blue, fontSize: 15),
+                ),
+              ),
+              CustomButton(
+                onPressed: () async {
+                  try {
+                    final user = await authService.login(
+                      userController.text,
+                      passwordController.text,
+                    );
+                    if (user != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const TodoListScreen()),
+                      );
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(
+                              AppLocalizations.of(context)!.failedLogin(e))),
                     );
                   }
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Failed to login: $e')),
+                },
+                buttonText: AppLocalizations.of(context)!.login,
+              ),
+              const SizedBox(
+                height: 100,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SignupScreen()),
                   );
-                }
-              },
-              buttonText: 'Login',
-            ),
-            const SizedBox(
-              height: 100,
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const SignupScreen()),
-                );
-              },
-              child: const Text('New User? Create Account'),
-            ),
-          ],
+                },
+                child: Text(AppLocalizations.of(context)!.newUserCreateAccount),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -118,32 +127,36 @@ class LoginScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Forgot Password'),
+          title: Text(AppLocalizations.of(context)!.forgotPassword),
           content: TextField(
             controller: emailController,
-            decoration: const InputDecoration(
-              hintText: 'Enter your email',
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.enterEmail,
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Send'),
+              child: Text(AppLocalizations.of(context)!.send),
               onPressed: () async {
                 try {
                   await authService.resetPassword(emailController.text);
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Password reset email sent')),
+                    SnackBar(
+                        content: Text(AppLocalizations.of(context)!
+                            .passwordResetEmailSent)),
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error: $e')),
+                    SnackBar(
+                        content:
+                            Text('${AppLocalizations.of(context)!.error} $e')),
                   );
                 }
               },
