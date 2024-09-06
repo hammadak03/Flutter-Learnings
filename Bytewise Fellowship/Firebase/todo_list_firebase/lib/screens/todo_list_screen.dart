@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todo_list_firebase/screens/login_screen.dart';
 import '../services/firestore_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TodoListScreen extends StatefulWidget {
   const TodoListScreen({super.key});
@@ -35,8 +36,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
             ? TextField(
                 controller: _searchController,
                 autofocus: true, // Automatically focus the search field
-                decoration: const InputDecoration(
-                  hintText: 'Search tasks...',
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.searchTasks,
                   hintStyle: TextStyle(color: Colors.white60),
                   border: InputBorder.none,
                 ),
@@ -47,7 +48,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   });
                 },
               )
-            : const Text('TODOs', style: TextStyle(color: Colors.white)),
+            : Text(AppLocalizations.of(context)!.todos,
+                style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             icon: Icon(
@@ -84,7 +86,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
             child: TextField(
               controller: _textController,
               decoration: InputDecoration(
-                hintText: 'Enter a new task',
+                hintText: AppLocalizations.of(context)!.enterNewTask,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -110,7 +112,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
           ),
           Expanded(
             child: user == null
-                ? const Center(child: Text('No user logged in'))
+                ? Center(
+                    child: Text(AppLocalizations.of(context)!.noUserLoggedIn))
                 : _buildTodoList(user.uid),
           ),
         ],
@@ -131,11 +134,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
           if (kDebugMode) {
             print(snapshot.error);
           }
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(
+              child: Text(
+                  '${AppLocalizations.of(context)!.error} ${snapshot.error}'));
         }
 
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(child: Text('No tasks found.'));
+          return Center(
+              child: Text(AppLocalizations.of(context)!.noTasksFound));
         }
 
         final todos = snapshot.data!.docs.where((doc) {
@@ -144,7 +150,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
         }).toList();
 
         if (todos.isEmpty) {
-          return const Center(child: Text('No matching tasks found.'));
+          return Center(
+              child: Text(AppLocalizations.of(context)!.noMatchingTasksFound));
         }
 
         return ListView.builder(
@@ -187,11 +194,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text('Edit Task'),
+                      title: Text(AppLocalizations.of(context)!.editTask),
                       content: TextField(
                         controller: _textController,
-                        decoration:
-                            const InputDecoration(hintText: 'Enter your task'),
+                        decoration: InputDecoration(
+                            hintText:
+                                AppLocalizations.of(context)!.enterYourTask),
                         onSubmitted: (_) async {
                           await _firestoreService.updateTodoItem(
                               docId, _textController.text);
@@ -201,14 +209,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       ),
                       actions: <Widget>[
                         TextButton(
-                          child: const Text('Cancel'),
+                          child: Text(AppLocalizations.of(context)!.cancel),
                           onPressed: () {
                             _textController.clear();
                             Navigator.of(context).pop();
                           },
                         ),
                         TextButton(
-                          child: const Text('Save'),
+                          child: Text(AppLocalizations.of(context)!.save),
                           onPressed: () async {
                             await _firestoreService.updateTodoItem(
                                 docId, _textController.text);

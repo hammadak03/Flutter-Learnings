@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:77674522220:android:cc03ca152f7fef5498da49",
         "android_client_info": {
-          "package_name": "com.example.firebase_basics"
+          "package_name": "com.example.todo_list_firebase"
         }
       },
       "oauth_client": [],
